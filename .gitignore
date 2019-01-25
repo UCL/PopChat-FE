@@ -1,0 +1,9 @@
+# Node stuff
+node_modules/
+dist/
+
+# Temp files
+*~
+*.swp
+*.swo
+*#
