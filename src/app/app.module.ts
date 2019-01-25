@@ -9,13 +9,17 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
+import { SongsComponent } from './songs/songs.component';
+import { SongHeadlineComponent } from './song-headline/song-headline.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LogoutComponent,
-    AdminComponent
+    AdminComponent,
+    SongsComponent,
+    SongHeadlineComponent
   ],
   imports: [
     BrowserModule,

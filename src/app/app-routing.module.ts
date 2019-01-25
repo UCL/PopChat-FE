@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AdminComponent } from './admin/admin.component';
+import { SongsComponent } from './songs/songs.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'admin', component: AdminComponent},
+  {path: 'songs', component: SongsComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

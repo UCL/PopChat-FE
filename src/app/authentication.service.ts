@@ -3,13 +3,50 @@ import { OAuthService } from 'angular-oauth2-oidc';
 
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Pageable<T> {
+  content: Array<T>;
+  empty: boolean;
+  first: boolean;
+  last: boolean;
+  number: number;
+  numberOfElements: number;
+  pageable: PageableDetails;
+  size: number;
+  sort: SortDetails;
+  totalElements: number;
+  totalPages: number;
+}
+
+export interface SortDetails {
+  sorted: boolean;
+  unsorted: boolean;
+  empty: boolean;
+}
+
+export interface PageableDetails {
+  offset: number;
+  pageNumber: number;
+  pageSize: number;
+  paged: boolean;
+  sort: SortDetails;
+  unpaged: boolean;
+}
+
+export interface SongHeadline {
+  id: number;
+  title: string;
+  artist: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private oauthService: OAuthService, private router: Router) {
+  constructor(private oauthService: OAuthService, private router: Router, private httpClient: HttpClient) {
     this.oauthService.clientId = environment.oauth_id;
     this.oauthService.dummyClientSecret = environment.oauth_secret;
     this.oauthService.setStorage(localStorage);
@@ -27,7 +64,7 @@ export class AuthenticationService {
   }
 
   public get tokenHeader(): string {
-    return 'Bearer: ' + this.oauthService.getAccessToken();
+    return 'Bearer ' + this.oauthService.getAccessToken();
   }
 
   public login(username: string, password: string): void {
@@ -38,6 +75,8 @@ export class AuthenticationService {
       console.log('Failed');
     });
   }
+
+  public getSongs(): Observable<Pageable<SongHeadline>> {
+    return this.httpClient.get<Pageable<SongHeadline>>('http://localhost:8080/songs', { headers: {Authorization: this.tokenHeader}});
+  }
 }
-// Created admin with username admin and password wispy-mode-6
-//  an OAuth2 client with name: popchat-fe-client and password: proud-recipe-4
