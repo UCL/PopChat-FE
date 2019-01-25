@@ -5,18 +5,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { AuthenticationService } from './authentication.service';
+import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    OAuthModule.forRoot()
   ],
-  providers: [],
+  providers: [ AuthenticationService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

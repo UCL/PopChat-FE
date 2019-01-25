@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { AuthenticationService } from '../authentication.service';
 
@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
-    console.log('Login!');
+    const username = (<HTMLInputElement> document.getElementById('username')).value;
+    const password = (<HTMLInputElement> document.getElementById('password')).value;
+    this.authService.login(username, password);
   }
 
 }
