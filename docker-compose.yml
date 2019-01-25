@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web_server:
+    container_name: pop-chat-fe
+    environment:
+      NODE_ENV: production
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    logging:
+      driver: "json-file"
