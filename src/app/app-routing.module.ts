@@ -5,12 +5,14 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AdminComponent } from './admin/admin.component';
 import { SongsComponent } from './songs/songs.component';
+import { PlayComponent } from './play/play.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'admin', component: AdminComponent},
   {path: 'songs', component: SongsComponent},
+  {path: 'play/:id', component: PlayComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

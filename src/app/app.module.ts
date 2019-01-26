@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminComponent } from './admin/admin.component';
 import { SongsComponent } from './songs/songs.component';
 import { SongHeadlineComponent } from './song-headline/song-headline.component';
+import { PlayComponent } from './play/play.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SongHeadlineComponent } from './song-headline/song-headline.component';
     LogoutComponent,
     AdminComponent,
     SongsComponent,
-    SongHeadlineComponent
+    SongHeadlineComponent,
+    PlayComponent
   ],
   imports: [
     BrowserModule,

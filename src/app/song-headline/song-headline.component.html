@@ -1,3 +1,3 @@
-<p>
-  {{ title }}
-</p>
+<a [routerLink]="['/play', this.id]"><button class="list-group-item list-group-item-action">
+  {{ title }} &mdash; <em>{{ artist }}</em>
+</button></a>
