@@ -53,6 +53,7 @@ export class AuthenticationService {
     this.oauthService.tokenEndpoint = 'http://localhost:8080/oauth/token';
     this.oauthService.scope = 'read write trust';
     this.oauthService.useHttpBasicAuthForPasswordFlow = true;
+    this.oauthService.postLogoutRedirectUri = window.location.origin;
   }
 
   public loggedIn(): boolean {
@@ -78,5 +79,9 @@ export class AuthenticationService {
 
   public getSongs(): Observable<Pageable<SongHeadline>> {
     return this.httpClient.get<Pageable<SongHeadline>>('http://localhost:8080/songs', { headers: {Authorization: this.tokenHeader}});
+  }
+
+  public getGame(id: number): Observable<any> {
+    return this.httpClient.post('http://localhost:8080/play/' + id, {}, { headers: {Authorization: this.tokenHeader}});
   }
 }
