@@ -13,12 +13,14 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
-    if (this.authService.loggedIn()) {
-      console.log('Already logged in');
-      this.router.navigate(['/songs']);
-    } else {
-      console.log('Need to log in');
-    }
+    this.authService.loggedIn().subscribe(state => {
+      if (state) {
+        console.log('Already logged in');
+        this.router.navigate(['/songs']);
+      } else {
+        console.log('Need to log in');
+      }
+    });
   }
 
   public submit(): void {

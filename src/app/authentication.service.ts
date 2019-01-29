@@ -4,7 +4,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 export interface Pageable<T> {
   content: Array<T>;
@@ -46,7 +46,10 @@ export interface SongHeadline {
 })
 export class AuthenticationService {
 
+  private obs: Subject<boolean>;
+
   constructor(private oauthService: OAuthService, private router: Router, private httpClient: HttpClient) {
+    this.obs = new BehaviorSubject<boolean>(false);
     this.oauthService.clientId = environment.oauth_id;
     this.oauthService.dummyClientSecret = environment.oauth_secret;
     this.oauthService.setStorage(localStorage);
@@ -54,14 +57,17 @@ export class AuthenticationService {
     this.oauthService.scope = 'read write trust';
     this.oauthService.useHttpBasicAuthForPasswordFlow = true;
     this.oauthService.postLogoutRedirectUri = window.location.origin;
+
+    this.obs.next(this.oauthService.hasValidAccessToken());
   }
 
-  public loggedIn(): boolean {
-     return this.oauthService.hasValidAccessToken();
+  public loggedIn(): Observable<boolean> {
+    return this.obs.asObservable();
   }
 
   public logOut(): void {
     this.oauthService.logOut();
+    this.updateLoggedIn();
   }
 
   public get tokenHeader(): string {
@@ -72,6 +78,7 @@ export class AuthenticationService {
     this.oauthService.fetchTokenUsingPasswordFlow(username, password).then((resp) => {
       console.log('Log in success');
       this.router.navigate(['/songs']);
+      this.updateLoggedIn();
     }).catch((err) => {
       console.log('Failed');
     });
@@ -83,5 +90,13 @@ export class AuthenticationService {
 
   public getGame(id: number): Observable<any> {
     return this.httpClient.post('http://localhost:8080/play/' + id, {}, { headers: {Authorization: this.tokenHeader}});
+  }
+
+  private updateLoggedIn(): void {
+    if (this.obs !== undefined) {
+      const status = this.oauthService.hasValidAccessToken();
+      console.log('Service updated logged in status with: ' + status);
+      this.obs.next(status);
+    }
   }
 }

@@ -6,9 +6,10 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/" routerLinkActive="active">Home</a>
-      <a class="nav-item nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
-      <a class="nav-item nav-link" routerLink="/logout" routerLinkActive="active">Logout</a>
+      <a *ngIf="!(loggedIn$ | async)" class="nav-item nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+      <a *ngIf="loggedIn$ | async" class="nav-item nav-link" routerLink="/songs" routerLinkActive="active">Songs</a>
+      <a *ngIf="loggedIn$ | async" class="nav-item nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
+      <a *ngIf="loggedIn$ | async" class="nav-item nav-link" routerLink="/logout" routerLinkActive="active">Logout</a>
     </div>
   </div>
 </nav>
