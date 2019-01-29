@@ -47,13 +47,14 @@ export interface SongHeadline {
 export class AuthenticationService {
 
   private obs: Subject<boolean>;
+  private serverRoot = 'http://localhost:8080';
 
   constructor(private oauthService: OAuthService, private router: Router, private httpClient: HttpClient) {
     this.obs = new BehaviorSubject<boolean>(false);
     this.oauthService.clientId = environment.oauth_id;
     this.oauthService.dummyClientSecret = environment.oauth_secret;
     this.oauthService.setStorage(localStorage);
-    this.oauthService.tokenEndpoint = 'http://localhost:8080/oauth/token';
+    this.oauthService.tokenEndpoint = this.serverRoot + '/oauth/token';
     this.oauthService.scope = 'read write trust';
     this.oauthService.useHttpBasicAuthForPasswordFlow = true;
     this.oauthService.postLogoutRedirectUri = window.location.origin;
@@ -84,12 +85,16 @@ export class AuthenticationService {
     });
   }
 
+  public createAccount(username: string, password: string): Observable<any> {
+    return this.httpClient.post<any>(this.serverRoot + '/user/signup', {username: username, password: password});
+  }
+
   public getSongs(): Observable<Pageable<SongHeadline>> {
-    return this.httpClient.get<Pageable<SongHeadline>>('http://localhost:8080/songs', { headers: {Authorization: this.tokenHeader}});
+    return this.httpClient.get<Pageable<SongHeadline>>(this.serverRoot + '/songs', { headers: {Authorization: this.tokenHeader}});
   }
 
   public getGame(id: number): Observable<any> {
-    return this.httpClient.post('http://localhost:8080/play/' + id, {}, { headers: {Authorization: this.tokenHeader}});
+    return this.httpClient.post(this.serverRoot + '/play/' + id, {}, { headers: {Authorization: this.tokenHeader}});
   }
 
   private updateLoggedIn(): void {
