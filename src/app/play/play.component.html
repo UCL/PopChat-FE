@@ -1,3 +1,5 @@
-<p>
-  play {{ id }}
-</p>
+<h2> Let's Play </h2>
+<div class="video" *ngIf="game !== undefined">
+  <iframe width="500px" height="300px"
+  [src]="getUrl()" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+</div>
