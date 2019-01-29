@@ -14,6 +14,7 @@ import { SongHeadlineComponent } from './song-headline/song-headline.component';
 import { PlayComponent } from './play/play.component';
 import { SignupComponent } from './signup/signup.component';
 import { BatchSignupComponent } from './batch-signup/batch-signup.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BatchSignupComponent } from './batch-signup/batch-signup.component';
     SongHeadlineComponent,
     PlayComponent,
     SignupComponent,
-    BatchSignupComponent
+    BatchSignupComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

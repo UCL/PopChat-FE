@@ -8,6 +8,7 @@ import { SongsComponent } from './songs/songs.component';
 import { PlayComponent } from './play/play.component';
 import { SignupComponent } from './signup/signup.component';
 import { BatchSignupComponent } from './batch-signup/batch-signup.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'play/:id', component: PlayComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'batch-signup', component: BatchSignupComponent},
+  {path: 'change-password', component: ChangePasswordComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 
