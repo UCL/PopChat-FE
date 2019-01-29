@@ -12,6 +12,8 @@ import { AdminComponent } from './admin/admin.component';
 import { SongsComponent } from './songs/songs.component';
 import { SongHeadlineComponent } from './song-headline/song-headline.component';
 import { PlayComponent } from './play/play.component';
+import { SignupComponent } from './signup/signup.component';
+import { BatchSignupComponent } from './batch-signup/batch-signup.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { PlayComponent } from './play/play.component';
     AdminComponent,
     SongsComponent,
     SongHeadlineComponent,
-    PlayComponent
+    PlayComponent,
+    SignupComponent,
+    BatchSignupComponent
   ],
   imports: [
     BrowserModule,
