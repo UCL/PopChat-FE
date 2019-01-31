@@ -89,6 +89,11 @@ export class AuthenticationService {
     return this.httpClient.post<any>(this.serverRoot + '/user/signup', {username: username, password: password});
   }
 
+  public batchCreateAccounts(prefix: string, count: number): Observable<any> {
+    return this.httpClient.post<any>(this.serverRoot + '/user/batch-signup', {prefix: prefix, numUsers: count},
+                                    { headers: {Authorization: this.tokenHeader}});
+  }
+
   public getSongs(): Observable<Pageable<SongHeadline>> {
     return this.httpClient.get<Pageable<SongHeadline>>(this.serverRoot + '/songs', { headers: {Authorization: this.tokenHeader}});
   }
