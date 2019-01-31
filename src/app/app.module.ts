@@ -15,6 +15,8 @@ import { PlayComponent } from './play/play.component';
 import { SignupComponent } from './signup/signup.component';
 import { BatchSignupComponent } from './batch-signup/batch-signup.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { PromoteComponent } from './promote/promote.component';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     PlayComponent,
     SignupComponent,
     BatchSignupComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PromoteComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
