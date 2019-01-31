@@ -94,6 +94,12 @@ export class AuthenticationService {
                                     { headers: {Authorization: this.tokenHeader}});
   }
 
+  public changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    return this.httpClient.post<any>(this.serverRoot + '/user/change-password',
+                                     { oldPassword: oldPassword, newPassword: newPassword},
+                                     { headers: {Authorization: this.tokenHeader}});
+  }
+
   public getSongs(): Observable<Pageable<SongHeadline>> {
     return this.httpClient.get<Pageable<SongHeadline>>(this.serverRoot + '/songs', { headers: {Authorization: this.tokenHeader}});
   }
