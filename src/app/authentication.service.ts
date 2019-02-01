@@ -41,6 +41,11 @@ export interface SongHeadline {
   artist: string;
 }
 
+export interface UserPromotion {
+  username: string;
+  admin: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -86,26 +91,36 @@ export class AuthenticationService {
   }
 
   public createAccount(username: string, password: string): Observable<any> {
-    return this.httpClient.post<any>(this.serverRoot + '/user/signup', {username: username, password: password});
+    return this.httpClient.post<any>(this.serverRoot + '/user/signup', { username: username, password: password });
   }
 
   public batchCreateAccounts(prefix: string, count: number): Observable<any> {
-    return this.httpClient.post<any>(this.serverRoot + '/user/batch-signup', {prefix: prefix, numUsers: count},
-                                    { headers: {Authorization: this.tokenHeader}});
+    return this.httpClient.post<any>(this.serverRoot + '/user/batch-signup', { prefix: prefix, numUsers: count },
+      { headers: { Authorization: this.tokenHeader } });
   }
 
   public changePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.httpClient.post<any>(this.serverRoot + '/user/change-password',
-                                     { oldPassword: oldPassword, newPassword: newPassword},
-                                     { headers: {Authorization: this.tokenHeader}});
+      { oldPassword: oldPassword, newPassword: newPassword },
+      { headers: { Authorization: this.tokenHeader } });
+  }
+
+  public getAllUsers(): Observable<any> {
+    return this.httpClient.get<any>(this.serverRoot + '/user/list', { headers: { Authorization: this.tokenHeader } });
+  }
+
+  public toggleAdmin(user: UserPromotion): Observable<any> {
+    return this.httpClient.post<any>(this.serverRoot + '/user/promote',
+                                     { username: user.username, promote: !user.admin },
+                                     { headers: { Authorization: this.tokenHeader } });
   }
 
   public getSongs(): Observable<Pageable<SongHeadline>> {
-    return this.httpClient.get<Pageable<SongHeadline>>(this.serverRoot + '/songs', { headers: {Authorization: this.tokenHeader}});
+    return this.httpClient.get<Pageable<SongHeadline>>(this.serverRoot + '/songs', { headers: { Authorization: this.tokenHeader } });
   }
 
   public getGame(id: number): Observable<any> {
-    return this.httpClient.post(this.serverRoot + '/play/' + id, {}, { headers: {Authorization: this.tokenHeader}});
+    return this.httpClient.post(this.serverRoot + '/play/' + id, {}, { headers: { Authorization: this.tokenHeader } });
   }
 
   private updateLoggedIn(): void {

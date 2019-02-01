@@ -1,3 +1,21 @@
-<p>
-  promote works!
-</p>
+<h2> Administrator management</h2>
+<div class="alert alert-danger" *ngIf="errorMessage !== undefined">{{ errorMessage }}</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">IsAdmin</th>
+      <th scope="col">Change</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tr *ngFor="let user of users">
+    <td>{{ user.username }} </td>
+    <td>{{ user.admin ? 'Administrator' : 'User' }} </td>
+    <td>
+      <button *ngIf="user.admin" type="button" class="btn btn-warning" (click)="toggle(user)"> Demote</button>
+      <button *ngIf="!user.admin" type="button" class="btn btn-danger" (click)="toggle(user)"> Promote</button>
+    </td>
+    <td> <div class="alert alert-danger" *ngIf="user.errorMessage !== undefined">{{ user.errorMessage }}</div></td>
+  </tr>
+</table>

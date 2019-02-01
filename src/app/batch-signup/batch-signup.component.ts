@@ -32,7 +32,6 @@ export class BatchSignupComponent implements OnInit {
     const number = (<HTMLInputElement>document.getElementById('number')).value;
     this.authService.batchCreateAccounts(username, +number).subscribe(data => {
       this.success = true;
-      console.log(data);
       this.accounts = data;
     }, error => {
       console.log(error);
