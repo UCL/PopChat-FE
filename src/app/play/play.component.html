@@ -1,5 +1,20 @@
 <h2> Let's Play </h2>
+
+<iframe id="video" width="500px" height="300px" src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
 <div class="video" *ngIf="game !== undefined">
-  <iframe width="500px" height="300px"
-  [src]="getUrl()" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+  <div *ngIf="currentIndex < game.questions.length">
+    <h2>
+      {{ game.questions[currentIndex].questionText }}
+    </h2>
+
+    <div class="taskList list-group">
+      <button *ngFor="let answer of game.questions[currentIndex].answers" class="list-group-item list-group-item-action"
+        (click)="submitAnswer($event, answer)" type='button'>
+        {{ answer.value | titlecase }} </button>
+    </div>
+  </div>
+  <div *ngIf="currentIndex >= game.questions.length">
+    <button class="btn btn-primary" type="button">Finish</button>
+  </div>
+
 </div>
