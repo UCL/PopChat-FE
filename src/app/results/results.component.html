@@ -1,3 +1,30 @@
-<p>
-  results works!
-</p>
+<h2> Game Results</h2>
+
+<div class="alert alert-danger" *ngIf="errorMessage !== undefined" >{{ errorMessage }}</div>
+
+<div class="results" *ngIf="results !== undefined">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Song Title</th>
+            <th scope="col">Question</th>
+            <th scope="col">All Options</th>
+            <th scope="col">Select Answer</th>
+            <th scope="col">Was Correct? </th>
+            <th scope="col">Seconds to Answer</th>
+            <th scope="col">Question Start Time</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let row of results">
+          <td>{{ row.username }}</td>
+          <td>{{ row.songTitle }}</td>
+          <td>{{ row.question }}</td>
+          <td>{{ row.allAnswers }}</td>
+          <td>{{ row.answer }}</td>
+          <td>{{ row.answerCorrect }}</td>
+          <td>{{ diffTime(row.answerSelectTime, row.questionStartTime) | number:'1.0-1'}}</td>
+          <td>{{ row.questionStartTime | date:'short' }}</td>
+        </tr>
+      </table>
+</div>

@@ -142,4 +142,8 @@ export class AuthenticationService {
       { headers: { Authorization: this.tokenHeader } }).subscribe( _ => console.log('Answer saved'),
       error => console.log(error));
   }
+
+  public getResults(): Observable<any> {
+    return this.httpClient.get(this.serverRoot + '/user/results', { headers: { Authorization: this.tokenHeader }});
+  }
 }
