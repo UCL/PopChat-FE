@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { startTimeRange, endTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 export interface Pageable<T> {
   content: Array<T>;
@@ -111,8 +112,8 @@ export class AuthenticationService {
 
   public toggleAdmin(user: UserPromotion): Observable<any> {
     return this.httpClient.post<any>(this.serverRoot + '/user/promote',
-                                     { username: user.username, promote: !user.admin },
-                                     { headers: { Authorization: this.tokenHeader } });
+      { username: user.username, promote: !user.admin },
+      { headers: { Authorization: this.tokenHeader } });
   }
 
   public getSongs(): Observable<Pageable<SongHeadline>> {
@@ -129,5 +130,16 @@ export class AuthenticationService {
       console.log('Service updated logged in status with: ' + status);
       this.obs.next(status);
     }
+  }
+
+  public submitAnswer(answerId: number, startTime: Date, endTime: Date): void {
+    const responseBody = {
+      optionId: answerId,
+      startTime: startTime,
+      endTime: endTime
+    };
+    this.httpClient.post(this.serverRoot + '/answer', responseBody,
+      { headers: { Authorization: this.tokenHeader } }).subscribe( _ => console.log('Answer saved'),
+      error => console.log(error));
   }
 }

@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 interface Game {
+  gameId: number;
   url: string;
   endTime: number;
   startTime: number;
@@ -12,13 +13,16 @@ interface Game {
 }
 
 interface Question {
+  questionId: number;
   questionText: string;
   answers: Array<Answer>;
 }
 
 interface Answer {
+  optionId: number;
   value: string;
   correct: boolean;
+  startTime?: Date;
 }
 
 @Component({
@@ -46,11 +50,13 @@ export class PlayComponent implements OnInit {
     event.stopImmediatePropagation();
     event.srcElement.classList.add(answer.correct ? 'right' : 'wrong');
     console.log(answer.correct ? 'yay' : ':(');
+    this.authService.submitAnswer(answer.optionId, answer.startTime, new Date());
     setTimeout(() => {
         event.srcElement.classList.remove(answer.correct ? 'right' : 'wrong');
         if (answer.correct) {
           if (this.currentIndex < this.game.questions.length) {
             this.currentIndex += 1;
+            this.tagStart();
           }
         }
     }, 800);
@@ -67,7 +73,14 @@ export class PlayComponent implements OnInit {
         this.game = game;
         console.log(game);
         (<HTMLIFrameElement>window.document.getElementById('video')).src = this.getUrl();
+        this.tagStart();
       });
+  }
+
+  private tagStart(): void {
+    if (this.currentIndex < this.game.questions.length) {
+      this.game.questions[this.currentIndex].answers.forEach(a => a.startTime = new Date());
+    }
   }
 
 }
