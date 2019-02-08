@@ -5,7 +5,6 @@ import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { startTimeRange, endTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 export interface Pageable<T> {
   content: Array<T>;
@@ -64,6 +63,7 @@ export class AuthenticationService {
     this.oauthService.scope = 'read write trust';
     this.oauthService.useHttpBasicAuthForPasswordFlow = true;
     this.oauthService.postLogoutRedirectUri = window.location.origin;
+    this.oauthService.requireHttps = false;
 
     this.obs.next(this.oauthService.hasValidAccessToken());
   }
