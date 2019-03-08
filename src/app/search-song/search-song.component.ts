@@ -90,6 +90,7 @@ export class SearchSongComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.results = this.authService.getCachedSearchResults();
     this.searchUrlFunction = function (search) {
       return this.searchURL + encodeURIComponent(search);
     };
@@ -106,6 +107,7 @@ export class SearchSongComponent implements OnInit {
     this.httpClient.get<SearchResult>(this.searchUrlFunction(searchTerm)).subscribe(data => {
       this.searching = false;
       this.results = data;
+      this.authService.cacheSearchResults(data);
     }, this.handleError);
   }
 

@@ -72,6 +72,7 @@ export class AuthenticationService {
   private obs: Subject<boolean>;
   private serverRoot = 'http://localhost:8080';
   private song: DatabaseSong;
+  private searchResultsCache;
 
   constructor(private oauthService: OAuthService, private router: Router, private httpClient: HttpClient) {
     this.obs = new BehaviorSubject<boolean>(false);
@@ -232,5 +233,13 @@ export class AuthenticationService {
 
   public deleteSong(song: DatabaseSong): Observable<boolean> {
     return this.httpClient.delete<boolean>(this.serverRoot + '/song/' + song.id, { headers: { Authorization: this.tokenHeader } });
+  }
+
+  public cacheSearchResults(results): void {
+    this.searchResultsCache = results;
+  }
+
+  public getCachedSearchResults() {
+    return this.searchResultsCache;
   }
 }
