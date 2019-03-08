@@ -1,0 +1,19 @@
+<h2>Edit Song</h2>
+
+<div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+<div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+
+<div>
+  <div class="alert alert-danger" *ngIf="validation && validation.titleErrorMessage">{{ validation.titleErrorMessage }}</div>
+  <div class="row"><span class="label">Title:</span><input type="text" placeholder="Title" name="title" id="title" value="{{song?.title}}"/></div>
+  <div class="alert alert-danger" *ngIf="validation && validation.artistErrorMessage">{{ validation.artistErrorMessage }}</div>
+  <div class="row"><span class="label">Artist:</span><input type="text" placeholder="Artist" name="artist" id="artist" value="{{ song?.artist }}"/></div>
+  <div class="alert alert-danger" *ngIf="validation && validation.yearErrorMessage">{{ validation.yearErrorMessage }}</div>
+  <div class="row"><span class="label">Year:</span><input type="number" placeholder="2003" name="year" id="year" value="{{ song?.year }}"/></div>
+  <div class="alert alert-danger" *ngIf="validation && validation.videoErrorMessage">{{ validation.videoErrorMessage }}</div>
+  <div class="row"><span class="label">Youtube embed URL:</span><input type="text" placeholder="" name="url" id="url" value="{{ song?.video }}"/></div>
+  <div class="alert alert-danger" *ngIf="validation && validation.lyricsErrorMessage">{{ validation.lyricsErrorMessage }}</div>
+  <div class="row"><span class="label">LRC Lyrics:</span><textarea name="lyrics" id="lyrics" cols="50">{{ song?.lyrics }}</textarea></div>
+  <button *ngIf="!working" class="btn btn-primary" (click)="submit()" type="button">Save</button>
+  <button *ngIf="working" class="btn btn-secondary" type="button">Save</button>
+</div>

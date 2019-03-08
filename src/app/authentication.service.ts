@@ -46,6 +46,23 @@ export interface UserPromotion {
   admin: boolean;
 }
 
+export interface DatabaseSong {
+  title?: string;
+  artist?: string;
+  year?: number;
+  video?: string;
+  lyrics?: string;
+}
+
+export interface SongValidation {
+  valid: boolean;
+  titleErrorMessage?: string;
+  artistErrorMessage?: string;
+  yearErrorMessage?: string;
+  videoErrorMessage?: string;
+  lyricsErrorMessage?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,6 +70,7 @@ export class AuthenticationService {
 
   private obs: Subject<boolean>;
   private serverRoot = 'http://localhost:8080';
+  private song: DatabaseSong;
 
   constructor(private oauthService: OAuthService, private router: Router, private httpClient: HttpClient) {
     this.obs = new BehaviorSubject<boolean>(false);
@@ -66,6 +84,8 @@ export class AuthenticationService {
     this.oauthService.requireHttps = false;
 
     this.obs.next(this.oauthService.hasValidAccessToken());
+
+    this.clearSong();
   }
 
   public loggedIn(): Observable<boolean> {
@@ -139,11 +159,64 @@ export class AuthenticationService {
       endTime: endTime
     };
     this.httpClient.post(this.serverRoot + '/answer', responseBody,
-      { headers: { Authorization: this.tokenHeader } }).subscribe( _ => console.log('Answer saved'),
-      error => console.log(error));
+      { headers: { Authorization: this.tokenHeader } }).subscribe(_ => console.log('Answer saved'),
+        error => console.log(error));
   }
 
   public getResults(): Observable<any> {
-    return this.httpClient.get(this.serverRoot + '/user/results', { headers: { Authorization: this.tokenHeader }});
+    return this.httpClient.get(this.serverRoot + '/user/results', { headers: { Authorization: this.tokenHeader } });
+  }
+
+  public setSongState(title: string, artist: string, year: number, video: string, lyrics: string) {
+    this.song = {
+      title: title,
+      artist: artist,
+      year: year,
+      video: video,
+      lyrics: lyrics
+    };
+  }
+
+  public getSongState(): DatabaseSong {
+    return Object.assign({}, this.song);
+  }
+
+  public clearSong(): void {
+    this.song = {};
+  }
+
+  public isSongValid(): SongValidation {
+    const validation: SongValidation = {
+      valid: true
+    };
+
+    validation.titleErrorMessage = this.checkString(this.song.title);
+    validation.artistErrorMessage = this.checkString(this.song.artist);
+    validation.yearErrorMessage = this.checkYear(this.song.year);
+    validation.videoErrorMessage = this.checkUrl(this.song.video);
+    validation.lyricsErrorMessage = this.checkString(this.song.lyrics);
+    validation.valid = !validation.titleErrorMessage && !validation.artistErrorMessage &&
+                       !validation.yearErrorMessage && !validation.videoErrorMessage &&
+                       !validation.lyricsErrorMessage;
+    return validation;
+  }
+
+  private checkString(string: string): string {
+    return !(string === undefined || typeof (string) !== 'string' || string.length < 1) ? undefined : 'Value must not be empty';
+  }
+
+  private checkYear(year: number): string {
+    return year !== undefined && typeof (year) === 'number' && year > 1 ? undefined : 'The year must be provided';
+  }
+
+  private checkUrl(url: string): string {
+    return url !== undefined && typeof (url) === 'string' && url.startsWith('https://www.youtube.com/embed/') ?
+      undefined : 'Youtube URLS must start with https://www.youtube.com/embed/';
+  }
+
+  public saveSong(): Observable<SongValidation> {
+    return this.httpClient.post<SongValidation>(this.serverRoot + '/setSong',
+                                                this.song,
+                                                { headers: { Authorization: this.tokenHeader } });
   }
 }

@@ -11,6 +11,8 @@ import { BatchSignupComponent } from './batch-signup/batch-signup.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { PromoteComponent } from './promote/promote.component';
 import { ResultsComponent } from './results/results.component';
+import { AddSongComponent } from './add-song/add-song.component';
+import { SearchSongComponent } from './search-song/search-song.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -23,6 +25,8 @@ const routes: Routes = [
   {path: 'change-password', component: ChangePasswordComponent},
   {path: 'promote', component: PromoteComponent},
   {path: 'results', component: ResultsComponent},
+  {path: 'searchSong', component: SearchSongComponent},
+  {path: 'addSong', component: AddSongComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

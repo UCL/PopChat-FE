@@ -1,0 +1,22 @@
+<h2> Song Search Engine</h2>
+
+<div class="alert alert-danger" *ngIf="errorMessage !== undefined">{{ errorMessage }}</div>
+<div class="row">
+  <span class="label">Search Terms:</span>
+  <input type="text" placeholder="Search terms" name="search" id="search" />
+</div>
+<div *ngIf="!searching">
+  <button class="btn btn-primary" (click)="submit()" type="button">Submit</button>
+</div>
+<div *ngIf="searching">
+    <button class="btn btn-secondary" type="button">Searching</button>
+</div>
+<div *ngIf="results !== undefined" class="results">
+    <div class="list-group">
+      <span *ngFor="let song of results.result.songs">
+          <button class="list-group-item list-group-item-action" (click)="addSong(song)">
+              {{ song.name }} &mdash; <em>{{ song.artists[0].name }}</em>
+            </button>
+          </span>
+    </div>
+</div>
