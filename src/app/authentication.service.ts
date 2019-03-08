@@ -47,6 +47,7 @@ export interface UserPromotion {
 }
 
 export interface DatabaseSong {
+  id?: number;
   title?: string;
   artist?: string;
   year?: number;
@@ -177,6 +178,11 @@ export class AuthenticationService {
     };
   }
 
+
+  public setSong(song: DatabaseSong) {
+    this.song = song;
+  }
+
   public getSongState(): DatabaseSong {
     return Object.assign({}, this.song);
   }
@@ -218,5 +224,13 @@ export class AuthenticationService {
     return this.httpClient.post<SongValidation>(this.serverRoot + '/setSong',
                                                 this.song,
                                                 { headers: { Authorization: this.tokenHeader } });
+  }
+
+  public getAllSongList(): Observable<Array<DatabaseSong>> {
+    return this.httpClient.get<Array<DatabaseSong>>(this.serverRoot + '/viewSongs', { headers: { Authorization: this.tokenHeader } });
+  }
+
+  public deleteSong(song: DatabaseSong): Observable<boolean> {
+    return this.httpClient.delete<boolean>(this.serverRoot + '/song/' + song.id, { headers: { Authorization: this.tokenHeader } });
   }
 }

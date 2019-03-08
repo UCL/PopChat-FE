@@ -13,6 +13,7 @@ import { PromoteComponent } from './promote/promote.component';
 import { ResultsComponent } from './results/results.component';
 import { AddSongComponent } from './add-song/add-song.component';
 import { SearchSongComponent } from './search-song/search-song.component';
+import { ViewSongsComponent } from './view-songs/view-songs.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'results', component: ResultsComponent},
   {path: 'searchSong', component: SearchSongComponent},
   {path: 'addSong', component: AddSongComponent},
+  {path: 'viewSongs', component: ViewSongsComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

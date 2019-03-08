@@ -29,21 +29,23 @@ export class AddSongComponent implements OnInit {
     this.errorMessage = undefined;
     this.successMessage = undefined;
 
-    const title = (<HTMLInputElement> document.getElementById('title')).value;
-    const artist = (<HTMLInputElement> document.getElementById('artist')).value;
-    const year = (<HTMLInputElement> document.getElementById('year')).value;
-    const url = (<HTMLInputElement> document.getElementById('url')).value;
-    const lyrics = (<HTMLInputElement> document.getElementById('lyrics')).value;
-    this.authService.setSongState(title, artist, year === undefined ? undefined : +year, url, lyrics);
-    this.song = this.authService.getSongState();
+    this.song.title = (<HTMLInputElement> document.getElementById('title')).value;
+    this.song.artist = (<HTMLInputElement> document.getElementById('artist')).value;
+    this.song.year = +(<HTMLInputElement> document.getElementById('year')).value;
+    this.song.video = (<HTMLInputElement> document.getElementById('url')).value;
+    this.song.lyrics = (<HTMLInputElement> document.getElementById('lyrics')).value;
+
+    this.authService.setSong(this.song);
     this.validation = this.authService.isSongValid();
     if (!this.validation.valid) {
       // Don't save
+      this.working = false;
       return;
     }
     // Try save (Server validation may fail)
     this.authService.saveSong().subscribe( data => {
       console.log(data);
+      this.working = false;
       this.validation = data;
       if (this.validation.valid) {
         this.successMessage = 'Song successfully saved';

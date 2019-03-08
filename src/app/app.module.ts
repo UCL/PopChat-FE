@@ -19,6 +19,7 @@ import { PromoteComponent } from './promote/promote.component';
 import { ResultsComponent } from './results/results.component';
 import { SearchSongComponent } from './search-song/search-song.component';
 import { AddSongComponent } from './add-song/add-song.component';
+import { ViewSongsComponent } from './view-songs/view-songs.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AddSongComponent } from './add-song/add-song.component';
     PromoteComponent,
     ResultsComponent,
     SearchSongComponent,
-    AddSongComponent
+    AddSongComponent,
+    ViewSongsComponent
   ],
   imports: [
     BrowserModule,
