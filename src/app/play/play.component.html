@@ -1,8 +1,9 @@
 <h2> Let's Play </h2>
 
-<iframe id="video" width="500px" height="300px" src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+<iframe id="video" width="500px" height="300px" type="text/html" src="" frameborder="0"
+  allow="autoplay; encrypted-media"></iframe>
 <div class="video" *ngIf="game !== undefined">
-  <div *ngIf="currentIndex < game.questions.length">
+  <div *ngIf="active && currentIndex < game.questions.length">
     <h2>
       {{ game.questions[currentIndex].questionText }}
     </h2>
@@ -17,5 +18,4 @@
     <h2>All done!</h2>
     <a routerLink="/songs"><button class="btn btn-primary" type="button">Finish</button></a>
   </div>
-
 </div>
